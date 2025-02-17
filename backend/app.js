@@ -6,8 +6,6 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 
-
-
 const swaggerSpec = require("./swagger")
 app.use("/api-doc", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
