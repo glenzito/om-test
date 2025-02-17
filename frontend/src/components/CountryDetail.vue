@@ -6,7 +6,7 @@
         <p><strong>Population:</strong> {{ countryDetails.population.toLocaleString() }}</p>
         <p><strong>Capital:</strong> {{ countryDetails.capital }}</p>
       </div>
-      <button @click="goBack">Back to Home</button>
+      <button @click="goBack"><< Go back</button>
     </div>
   </template>
   

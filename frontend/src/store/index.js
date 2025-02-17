@@ -1,6 +1,5 @@
 import { createStore } from "vuex"
 
-// Use the environment variable with a fallback
 const apiBaseUrl = process.env.VUE_APP_API_BASE_URL || "http://localhost:3000"
 
 const store = createStore({

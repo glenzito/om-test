@@ -1,10 +1,10 @@
 <template>
     <div class="country-detail" v-if="countryDetails">
       <h1>{{ countryDetails.name.common }}</h1>
-      <p>Capital: {{ countryDetails.capital ? countryDetails.capital[0] : 'N/A' }}</p>
-      <p>Population: {{ countryDetails.population }}</p>
-      <p>Region: {{ countryDetails.region }}</p>
-      <router-link to="/">Back to Countries List</router-link>
+      <p>Name of Country: {{ countryDetails.name }}</p>
+      <p>Capital City : {{ countryDetails.capital ? countryDetails.capital : 'N/A' }}</p>
+      <p>Population size: {{ countryDetails.population }}</p>
+      <router-link to="/"> Go back</router-link>
     </div>
     <div v-else>please wait</div>
   </template>

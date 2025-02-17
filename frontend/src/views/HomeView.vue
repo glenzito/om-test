@@ -1,46 +1,20 @@
 <template>
-  <div class="home max-w-7xl mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-8 text-center">Countries of the World</h1>
-
-
-    <div v-if="error" class="error-message text-center mb-8">
-      <p class="text-red-600 bg-red-100 p-4 rounded-lg mb-4">{{ error }}</p>
-      <button 
-        @click="retryLoading" 
-        class="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors"
-      >
-        Try Again
-      </button>
-    </div>
-
-
-    <div v-else-if="loading" class="loading-state flex justify-center items-center h-64">
-      <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
-    </div>
-
-    
-    <div v-else class="countries-grid grid grid-cols-auto-fill gap-6 p-4">
+  <div class="home">
+    <h1 class="title">Countries of the World</h1>
+    <div class="flag-grid">
       <div 
         v-for="country in countries" 
-        :key="country.name"
-        class="country-card cursor-pointer"
+        :key="country.name" 
+        class="flag-item" 
         @click="goToCountryDetail(country.name)"
       >
-        <div class="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-          <img 
-            :src="country.flag" 
-            :alt="`Flag of ${country.name}`"
-            class="w-full h-48 object-cover transform group-hover:scale-110 transition-transform duration-300"
-          />
-          <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-white p-3">
-            <h2 class="text-lg font-semibold truncate">{{ country.name }}</h2>
-          </div>
-        </div>
+        <img 
+          :src="country.flag" 
+          :alt="country.name" 
+          class="flag-image"
+        />
+        <p class="country-name">{{ country.name }}</p>
       </div>
-    </div>
-
-    <div v-if="!loading && !error && countries.length === 0" class="no-countries text-center py-8">
-      <p class="text-gray-600">No countries found.</p>
     </div>
   </div>
 </template>
@@ -51,22 +25,15 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'HomeView',
   computed: {
-    ...mapGetters({
-      countries: 'getCountries',
-      loading: 'isLoading',
-      error: 'getError'
-    })
+    ...mapGetters(['getCountries']),
+    countries() {
+      return this.getCountries;
+    }
   },
   methods: {
     ...mapActions(['fetchCountries']),
     goToCountryDetail(countryName) {
-      this.$router.push({ 
-        name: 'countryDetail', 
-        params: { countryName }
-      });
-    },
-    retryLoading() {
-      this.fetchCountries();
+      this.$router.push({ name: 'countryDetail', params: { countryName } });
     }
   },
   created() {
@@ -76,5 +43,50 @@ export default {
 </script>
 
 <style scoped>
-/* Tailwind handles the styles, no need for custom styles here */
+/* Container for the page */
+.home {
+  padding: 1rem;
+}
+
+/* Title style */
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Flag grid */
+.flag-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+/* Individual flag item */
+.flag-item {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  text-align: center;
+}
+
+.flag-item:hover {
+  transform: scale(1.05);
+}
+
+/* Flag image */
+.flag-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 1px solid #ccc;
+  border-radius: 0.375rem; /* Rounded corners */
+}
+
+/* Country name text */
+.country-name {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
 </style>
