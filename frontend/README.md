@@ -1,4 +1,4 @@
-# country-app
+# frontend
 
 ## Project setup
 ```
